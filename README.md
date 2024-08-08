@@ -23,7 +23,7 @@
 ## Methodology
 #### - Data Extraction: SQL was used to retrieve data from various tables.
 #### - Analysis: Statistical and trend analysis was conducted to answer the business questions.
-#### - Visualization: Visual representations (if applicable) were created to illustrate key findings and trends.
+#### - Visualization: Visual representations were created to illustrate key findings and trends.
 #
 ## Conclusion
 #### This project provides Rockbuster Stealth LLC with critical insights to enhance its online video rental strategy. The analysis supports strategic decision-making and helps the company stay competitive in the evolving video rental market.
