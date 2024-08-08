@@ -1,0 +1,73 @@
+# SQL Query to identify the top 10 cities within the top 10 countries
+
+SELECT
+    D.country,
+    C.city,
+    COUNT(A.customer_id) AS number_of_customers
+FROM
+    customer A
+INNER JOIN
+    address B ON A.address_id = B.address_id
+INNER JOIN
+    city C ON B.city_id = C.city_id
+INNER JOIN
+    country D ON C.country_id = D.country_id
+WHERE
+    D.country IN (
+        SELECT
+              D.country
+        FROM
+              customer A
+        INNER JOIN
+              address B ON A.address_id = B.address_id
+        INNER JOIN
+               city C ON B.city_id = C.city_id
+        INNER JOIN
+               country D ON C.country_id = D.country_id
+        GROUP BY
+               D.country
+        ORDER BY
+            COUNT(A.customer_id) DESC
+        LIMIT 10
+    )
+GROUP BY
+    D.country, C.city
+ORDER BY
+    COUNT(A.customer_id) DESC
+LIMIT 10;
+
+Explanation:
+Purpose: This query is designed to find the top 10 cities with the most customers, but only within the top 10 countries with the highest number of customers overall.
+Step-by-Step:
+1)Join Tables: The query joins the customer, address, city, and country tables to access the necessary data.
+2)Subquery for Top Countries: The subquery in the WHERE clause selects the top 10 countries by customer count.
+3)Main Query: It then counts the customers in each city within those top countries.
+4)Order and Limit: Finally, the results are ordered by customer count, and the top 10 cities are selected.
+
+# SQL Query to find the top 10 countries in terms of customer numbers
+
+SELECT
+    D.country,
+    COUNT(A.customer_id) AS number_of_customers
+FROM
+    customer A
+INNER JOIN
+    address B ON A.address_id = B.address_id
+INNER JOIN
+    city C ON B.city_id = C.city_id
+INNER JOIN
+    country D ON C.country_id = D.country_id
+GROUP BY
+    D.country
+ORDER BY
+    number_of_customers DESC
+LIMIT 10;
+
+Explanation:
+Purpose: The query is designed to identify the top 10 countries where Rockbuster has the most customers.
+
+Step-by-Step:
+1)Join Tables: The query joins the customer, address, city, and country tables to gather the necessary data.
+2)Grouping: The customers are grouped by country.
+3)Counting: It then counts the number of customers in each country.
+4)Ordering and Limiting: The countries are ordered by the number of customers in descending order, and the top 10 countries are selected.
