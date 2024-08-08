@@ -1,0 +1,73 @@
+-- Query to find the top 5 customers from the top 10 cities who’ve paid the highest total amounts to Rockbuster.
+-- The customer team would like to reward them for their loyalty!
+
+SELECT
+    B.customer_id,
+    B.first_name,
+    B.last_name,
+    E.country,
+    D.city,
+    SUM(A.amount) AS total_amount_paid
+FROM
+    payment A
+JOIN
+    customer B ON A.customer_id = B.customer_id
+JOIN
+    address C ON B.address_id = C.address_id
+JOIN
+    city D ON C.city_id = D.city_id
+JOIN
+    country E ON D.country_id = E.country_id
+WHERE
+    D.city IN (
+        SELECT
+            D.city
+        FROM
+            customer B
+        JOIN
+            address C ON B.address_id = C.address_id
+        JOIN
+            city D ON C.city_id = D.city_id
+        JOIN
+            country E ON D.country_id = E.country_id
+        WHERE
+            E.country IN (
+                SELECT
+                    E.country
+                FROM
+                    customer B
+                JOIN
+                    address C ON B.address_id = C.address_id
+                JOIN
+                    city D ON C.city_id = D.city_id
+                JOIN
+                    country E ON D.country_id = E.country_id
+                GROUP BY
+                    E.country
+                ORDER BY
+                    COUNT(B.customer_id) DESC
+                LIMIT 10
+            )
+        GROUP BY
+            E.country,
+            D.city
+        ORDER BY
+            COUNT(B.customer_id) DESC
+        LIMIT 10
+    )
+GROUP BY
+    B.customer_id,
+    B.first_name,
+    B.last_name,
+    E.country,
+    D.city
+ORDER BY
+    total_amount_paid DESC
+LIMIT 5;
+
+Explanation:
+This query aims to find the top 5 customers who have paid the highest total amounts to Rockbuster from the top 10 cities (based on customer count) in the top 10 countries. The query performs the following steps:
+1)Join Tables: The query starts by joining the necessary tables (payment, customer, address, city, and country) to access all required fields.
+2)Filter by Top Cities: The subquery in the WHERE clause filters the cities to the top 10 cities within the top 10 countries based on the number of customers.
+3)Calculate Total Payment: The total amount paid by each customer is summed up for each of these top cities.
+4)Order and Limit: In descending order, the results are ordered by total_amount_paid, and the top 5 customers are selected.
