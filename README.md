@@ -29,7 +29,7 @@
 #### This project provides Rockbuster Stealth LLC with critical insights to enhance their online video rental strategy. The analysis supports strategic decision-making and helps the company stay competitive in the evolving video rental market.
 #
 ## Access to Data & Reports
-#### - Data Set:
-#### - Visualizations: 
+#### - Data Set:-[Rockbuster Data Set](https://github.com/isom17/InstaCartAnalysis/files/14471305/Rockbuster.Excel.Data.xls)
+#### - Visualizations:**Visualizations**: Check out the [Tableau Public dashboard](https://public.tableau.com/app/profile/shravani.i6064/viz/shared/6JTMY4QCN) for interactive insights.  
 #### - Final Report:
 
